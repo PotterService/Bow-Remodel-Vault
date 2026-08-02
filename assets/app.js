@@ -12,7 +12,7 @@ document.documentElement.dataset.theme=db.settings.theme||'light';
 document.body.classList.toggle('compact',!!db.settings.compact);
 
 function init(){
- $('#menuBtn')?.addEventListener('click',()=>$('.sidebar').classList.toggle('open'));
+ $('#menuBtn')?.addEventListener('click',()=>$('.sidebar')?.classList.toggle('open'));
  $$('[data-action="theme-toggle"]').forEach(b=>b.onclick=()=>{db.settings.theme=db.settings.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=db.settings.theme;save()});
  $$('[data-action="open-quick-add"]').forEach(b=>b.onclick=openModal);
  $$('[data-action="close-modal"]').forEach(b=>b.onclick=closeModal);
@@ -27,8 +27,15 @@ function init(){
  $('#settingsForm')?.addEventListener('submit',e=>{e.preventDefault();Object.assign(db.settings,Object.fromEntries(new FormData(e.target)));save();alert('Settings saved.')});
  $('#compactToggle')?.addEventListener('change',e=>{db.settings.compact=e.target.checked;document.body.classList.toggle('compact',e.target.checked);save()});
  $('#importFile')?.addEventListener('change',importData);
+ $('#selectAllExports')?.addEventListener('click',()=>$$('#exportChoices input[type="checkbox"]').forEach(x=>x.checked=true));
+ $('#clearAllExports')?.addEventListener('click',()=>$$('#exportChoices input[type="checkbox"]').forEach(x=>x.checked=false));
+ $('#runCustomExport')?.addEventListener('click',runCustomExport);
+ $('#printSelectedExport')?.addEventListener('click',()=>printSelected(false));
+ $('#pdfSelectedExport')?.addEventListener('click',()=>printSelected(true));
+ addPageDownloadButton();
  $('#resetAllData')?.addEventListener('click',()=>{if(confirm('Delete all Bow Remodel Vault data from this browser?')){db=emptyData();save();location.reload()}});
- fillSettings(); renderPage();
+ fillSettings();
+ renderPage();
 }
 function openModal(){$('#quickModal').classList.remove('hidden');$('#modalBackdrop').classList.remove('hidden')}
 function closeModal(){$('#quickModal').classList.add('hidden');$('#modalBackdrop').classList.add('hidden')}
@@ -107,3 +114,110 @@ function exportData(){const blob=new Blob([JSON.stringify(db,null,2)],{type:'app
 function importData(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{db={...emptyData(),...JSON.parse(r.result)};save();alert('Backup imported.')}catch{alert('That file is not a valid backup.')}};r.readAsText(file)}
 function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 document.addEventListener('DOMContentLoaded',init);
+
+
+function downloadBlob(content,fileName,type='text/plain;charset=utf-8'){
+ const blob=content instanceof Blob?content:new Blob([content],{type});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fileName;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),500);
+}
+function safeFileName(value){return String(value||'bow-remodel-vault').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'bow-remodel-vault'}
+function selectedExportKeys(){return $$('#exportChoices input[type="checkbox"]:checked').map(x=>x.value)}
+function runCustomExport(){
+ const keys=selectedExportKeys();
+ if(!keys.length){alert('Choose at least one section to export.');return}
+ const format=$('#customExportFormat')?.value||'json';
+ if(format==='pdf'){printSelected(true);return}
+ if(format==='print'){printSelected(false);return}
+ if(format==='json'){
+   const selected={exportedAt:new Date().toISOString(),app:'Bow Remodel Vault'};
+   keys.forEach(k=>selected[k]=db[k]);
+   downloadBlob(JSON.stringify(selected,null,2),`bow-remodel-selected-${today()}.json`,'application/json');
+   return;
+ }
+ const listKeys=keys.filter(k=>k!=='settings');
+ if(keys.includes('settings')) downloadCollectionCsv('settings',[db.settings]);
+ if(!listKeys.length&&!keys.includes('settings')){alert('Choose at least one list.');return}
+ listKeys.forEach((k,index)=>setTimeout(()=>downloadCollectionCsv(k,db[k]||[]),index*180));
+}
+function csvEscape(value){
+ if(value===null||value===undefined)return '';
+ let text=typeof value==='object'?JSON.stringify(value):String(value);
+ return /[",\n\r]/.test(text)?'"'+text.replace(/"/g,'""')+'"':text;
+}
+function collectionToCsv(items){
+ if(!items.length)return 'No records\n';
+ const ignored=new Set(['dataUrl']);
+ const headers=[...new Set(items.flatMap(item=>Object.keys(item).filter(k=>!ignored.has(k))))];
+ return [headers.map(csvEscape).join(','),...items.map(item=>headers.map(h=>csvEscape(item[h])).join(','))].join('\r\n');
+}
+function downloadCollectionCsv(name,items){downloadBlob('\ufeff'+collectionToCsv(items),`bow-remodel-${safeFileName(name)}-${today()}.csv`,'text/csv;charset=utf-8')}
+function addPageDownloadButton(){
+ const page=document.body.dataset.page;
+ const map={rooms:'rooms',tasks:'tasks',budget:'expenses',shopping:'shopping',photos:'photos',measurements:'measurements',materials:'materials',tools:'tools',contractors:'contractors',documents:'documents',timeline:'timeline'};
+ const key=map[page]; if(!key)return;
+ const intro=$('.page-intro'); if(!intro)return;
+ let actions=intro.querySelector('.page-intro-actions');
+ if(!actions){actions=document.createElement('div');actions.className='page-intro-actions';const add=intro.querySelector('button[data-toggle-form]');if(add){add.replaceWith(actions);actions.appendChild(add)}}
+ const button=document.createElement('button');button.type='button';button.className='ghost list-download';button.textContent='↓ Download CSV';button.onclick=()=>downloadCollectionCsv(key,db[key]||[]);actions.appendChild(button);
+ const printButton=document.createElement('button');printButton.type='button';printButton.className='ghost';printButton.textContent='🖨 Print List';printButton.onclick=()=>printSections([key],false);actions.appendChild(printButton);
+ const pdfButton=document.createElement('button');pdfButton.type='button';pdfButton.className='ghost';pdfButton.textContent='📄 Save PDF';pdfButton.onclick=()=>printSections([key],true);actions.appendChild(pdfButton);
+}
+
+const exportLabels={settings:'Project Settings',rooms:'Rooms',tasks:'Tasks',expenses:'Expenses',shopping:'Shopping List',photos:'Photo Records',measurements:'Measurements',materials:'Materials',tools:'Tools',contractors:'Contractors',documents:'Document Records',timeline:'Timeline'};
+function printSelected(asPdf){
+ const keys=selectedExportKeys();
+ if(!keys.length){alert('Choose at least one section to print or save as PDF.');return}
+ printSections(keys,asPdf);
+}
+function printableValue(value){
+ if(value===null||value===undefined||value==='')return '—';
+ if(typeof value==='object')return escapeHtml(JSON.stringify(value));
+ return escapeHtml(String(value));
+}
+function printableSection(key){
+ const label=exportLabels[key]||key;
+ const items=key==='settings'?[db.settings]:(db[key]||[]);
+ if(!items.length)return `<section><h2>${escapeHtml(label)}</h2><p class="empty">No records.</p></section>`;
+ const ignored=new Set(['dataUrl','id','createdAt']);
+ const headers=[...new Set(items.flatMap(item=>Object.keys(item).filter(k=>!ignored.has(k))))];
+ const rows=items.map(item=>`<tr>${headers.map(h=>`<td>${printableValue(item[h])}</td>`).join('')}</tr>`).join('');
+ return `<section><h2>${escapeHtml(label)}</h2><div class="table-wrap"><table><thead><tr>${headers.map(h=>`<th>${escapeHtml(h.replace(/([A-Z])/g,' $1').replace(/^./,c=>c.toUpperCase()))}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div></section>`;
+}
+function printSections(keys,asPdf=false){
+ const project=escapeHtml(db.settings.projectName||'Bow Remodel Vault');
+ const modeNote=asPdf?'In the print window, choose “Save as PDF” as the destination.':'Choose your printer and print settings in the window that opens.';
+ const sections=keys.map(printableSection).join('');
+ const reportHtml=`<!doctype html><html><head><meta charset="utf-8"><title>${project} Report</title><style>
+ body{font-family:Arial,Helvetica,sans-serif;color:#17233a;margin:28px}header{border-bottom:3px solid #3157d5;padding-bottom:14px;margin-bottom:24px}h1{margin:0 0 5px;font-size:28px}header p{margin:4px 0;color:#596579}.notice{background:#eef3ff;border:1px solid #b9c7ff;padding:10px 12px;border-radius:8px;margin:14px 0 22px}section{margin:0 0 30px}h2{font-size:20px;border-left:5px solid #f6b73c;padding-left:10px}.table-wrap{overflow:visible}table{width:100%;border-collapse:collapse;font-size:11px;table-layout:auto}th,td{border:1px solid #cfd7e3;padding:7px;text-align:left;vertical-align:top;word-break:break-word}th{background:#edf2f8}tr:nth-child(even) td{background:#fafbfd}.empty{color:#667085}.footer{margin-top:35px;border-top:1px solid #ccd5e1;padding-top:10px;color:#667085;font-size:10px}@page{size:auto;margin:12mm}@media print{.notice{display:none}body{margin:0}section{break-inside:auto}thead{display:table-header-group}tr{break-inside:avoid}}
+ </style></head><body><header><h1>${project}</h1><p>Bow Remodel Vault</p><p>Generated ${new Date().toLocaleString()}</p></header><div class="notice">${escapeHtml(modeNote)}</div>${sections}<div class="footer">Generated by Bow Remodel Vault · remodel.potterservice.com</div></body></html>`;
+ let frame=document.getElementById('bowPrintFrame');
+ if(frame)frame.remove();
+ frame=document.createElement('iframe');
+ frame.id='bowPrintFrame';
+ frame.setAttribute('aria-hidden','true');
+ frame.style.position='fixed';
+ frame.style.right='0';
+ frame.style.bottom='0';
+ frame.style.width='1px';
+ frame.style.height='1px';
+ frame.style.border='0';
+ frame.style.opacity='0';
+ document.body.appendChild(frame);
+ const doc=frame.contentWindow.document;
+ doc.open();
+ doc.write(reportHtml);
+ doc.close();
+ const launchPrint=()=>{
+   try{
+     frame.contentWindow.focus();
+     frame.contentWindow.print();
+   }catch(error){
+     console.error('Print failed:',error);
+     alert('The print window could not open. Please check your browser print or pop-up settings and try again.');
+   }
+   setTimeout(()=>frame.remove(),1500);
+ };
+ if(doc.readyState==='complete')setTimeout(launchPrint,200);
+ else frame.onload=()=>setTimeout(launchPrint,200);
+}
+

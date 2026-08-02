@@ -7,12 +7,13 @@
 <title>Settings | Bow Remodel Vault</title>
 <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body data-page="settings">
+<body data-version="1.6.1" data-page="settings">
 <div class="app-shell">
 <aside class="sidebar">
   <div class="brand">
     <div class="brand-mark">BR</div>
-    <div><h1>Bow Remodel Vault</h1><p>Plan. Build. Track. Finish.</p></div>
+    <div class="brand-copy"><h1>Bow Remodel Vault</h1><p>Plan. Build. Track. Finish.</p><small class="app-version">Version 1.6.2.1</small></div>
+    
   </div>
   <nav><a class="" href="index.html"><span>🏠</span>Dashboard</a>
 <a class="" href="rooms.html"><span>🚪</span>Rooms</a>
@@ -27,11 +28,10 @@
 <a class="" href="documents.html"><span>📄</span>Documents</a>
 <a class="" href="timeline.html"><span>🗓️</span>Timeline</a>
 <a class="" href="reports.html"><span>📊</span>Reports</a>
-<a class="active" href="settings.html"><span>⚙️</span>Settings</a></nav>
-  <div class="sidebar-footer">
-    <button class="ghost full" data-action="quick-export">Export Backup</button>
-    <small>Local-first. No account required.</small>
-  </div>
+<a href="planned-features.html"><span>🚀</span>Planned Features</a>
+  <a class="active" href="settings.html"><span>⚙️</span>Settings</a>
+<a class="projects-link" href="https://potterservice.com/projects.html" target="_blank" rel="noopener noreferrer"><span>🌐</span>Other Bow Projects <b>↗</b></a>
+</nav>
 </aside>
 <main class="main">
 <header class="topbar">
@@ -61,11 +61,42 @@
     <div class="form-actions"><button class="primary" type="submit">Save Settings</button></div>
   </form>
 </section>
+<section class="panel span-2">
+  <div class="panel-head"><div><p class="eyebrow">Download Center</p><h3>Choose What to Export</h3></div></div>
+  <p>Select everything or only the parts you need. JSON is best for restoring data later. CSV is best for opening lists in Excel or Google Sheets. PDF and Print create a clean report using your browser’s print window.</p>
+  <div class="export-toolbar">
+    <button class="ghost" type="button" id="selectAllExports">Select Everything</button>
+    <button class="ghost" type="button" id="clearAllExports">Clear Selection</button>
+  </div>
+  <div class="export-grid" id="exportChoices">
+    <label class="export-option"><input type="checkbox" value="settings" checked> Project Settings</label>
+    <label class="export-option"><input type="checkbox" value="rooms" checked> Rooms</label>
+    <label class="export-option"><input type="checkbox" value="tasks" checked> Tasks</label>
+    <label class="export-option"><input type="checkbox" value="expenses" checked> Expenses</label>
+    <label class="export-option"><input type="checkbox" value="shopping" checked> Shopping List</label>
+    <label class="export-option"><input type="checkbox" value="photos" checked> Photo Records</label>
+    <label class="export-option"><input type="checkbox" value="measurements" checked> Measurements</label>
+    <label class="export-option"><input type="checkbox" value="materials" checked> Materials</label>
+    <label class="export-option"><input type="checkbox" value="tools" checked> Tools</label>
+    <label class="export-option"><input type="checkbox" value="contractors" checked> Contractors</label>
+    <label class="export-option"><input type="checkbox" value="documents" checked> Document Records</label>
+    <label class="export-option"><input type="checkbox" value="timeline" checked> Timeline</label>
+  </div>
+  <div class="export-toolbar">
+    <label><strong>Format</strong>
+      <select id="customExportFormat"><option value="json">JSON — one backup file</option><option value="csv">CSV — one file per selected list</option><option value="pdf">PDF — open Save as PDF window</option><option value="print">Print — open printer window</option></select>
+    </label>
+    <button class="primary" type="button" id="runCustomExport">Run Selected Export</button>
+    <button class="ghost" type="button" id="pdfSelectedExport">📄 Save Selected as PDF</button>
+    <button class="ghost" type="button" id="printSelectedExport">🖨 Print Selected</button>
+  </div>
+  <p class="export-note">Photo and document file previews are included only in JSON when they were stored in the browser. CSV, PDF, and Print reports include record details and stored file names. To create a PDF, choose “Save as PDF” in the browser print window.</p>
+</section>
 <section class="panel">
-  <div class="panel-head"><div><p class="eyebrow">Backup</p><h3>Export & Import</h3></div></div>
-  <p>Your remodel data is stored in this browser. Export regular backups, especially before clearing browser data or changing devices.</p>
+  <div class="panel-head"><div><p class="eyebrow">Restore & Safety</p><h3>Import or Reset</h3></div></div>
+  <p>Import a complete Bow Remodel Vault JSON backup, or reset all locally saved information.</p>
   <div class="backup-actions">
-    <button class="primary" data-action="quick-export">Export JSON Backup</button>
+    <button class="primary" data-action="quick-export">Quick Full JSON Backup</button>
     <label class="button-file">Import Backup<input id="importFile" type="file" accept=".json"></label>
     <button class="danger" id="resetAllData">Reset All Data</button>
   </div>
@@ -75,6 +106,13 @@
   <div class="setting-row"><span>Theme</span><button class="ghost" data-action="theme-toggle">Toggle Light / Dark</button></div>
   <div class="setting-row"><span>Compact cards</span><input id="compactToggle" type="checkbox"></div>
 </section>
+
+<section class="panel projects-panel">
+  <div class="panel-head"><div><p class="eyebrow">Discover More</p><h3>Potter Service Project Directory</h3></div></div>
+  <p>Bow Remodel Vault is one of many public projects from Potter Service. Visit the project directory to explore collection tools, utilities, websites, and other programs.</p>
+  <a class="primary button-link" href="https://potterservice.com/projects.html" target="_blank" rel="noopener noreferrer">Browse Other Projects ↗</a>
+</section>
+
 <section class="panel warning-panel">
   <h3>Local Storage Notice</h3>
   <p>Photos and uploaded documents are saved inside your browser when possible. Large files can fill browser storage quickly. Keep original copies elsewhere and export backups regularly.</p>
