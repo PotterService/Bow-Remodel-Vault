@@ -153,12 +153,14 @@
 </script>
 
 </head>
-<body data-version="1.6.3" data-page="timeline">
+<body data-version="1.6.4" data-page="timeline">
+<div class="mobile-menu-backdrop" id="mobileMenuBackdrop" aria-hidden="true"></div>
 <div class="app-shell">
-<aside class="sidebar">
+<aside class="sidebar" id="mobileSidebar">
+<button type="button" class="mobile-menu-close" id="mobileMenuClose" aria-label="Close navigation menu">✕</button>
   <div class="brand">
     <div class="brand-mark">BR</div>
-    <div class="brand-copy"><h1>Bow Remodel Vault</h1><p>Plan. Build. Track. Finish.</p><small class="app-version">Version 1.6.3</small></div>
+    <div class="brand-copy"><h1>Bow Remodel Vault</h1><p>Plan. Build. Track. Finish.</p><small class="app-version">Version 1.6.4</small></div>
     
   </div>
   <nav><a class="" href="index.html"><span>🏠</span>Dashboard</a>
@@ -181,7 +183,7 @@
 </aside>
 <main class="main">
 <header class="topbar">
-  <button class="menu-btn" id="menuBtn">☰</button>
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Open navigation menu" aria-controls="mobileSidebar" aria-expanded="false">☰</button>
   <div>
     <p class="eyebrow">Bow Remodel Vault</p>
     <h2>Timeline</h2>

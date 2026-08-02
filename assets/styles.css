@@ -154,73 +154,149 @@ body.compact .entity-card{padding:12px}body.compact .card-grid{gap:10px}
 }
 
 
-/* Mobile navigation drawer improvements - v1.6.3 */
-.mobile-nav-backdrop{
+/* Bow Remodel Vault v1.6.4 - reliable mobile navigation */
+.mobile-menu-close,
+.mobile-menu-backdrop{
   display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(8,18,34,.62);
-  backdrop-filter:blur(2px);
-  z-index:98;
 }
-.mobile-nav-backdrop.show{display:block}
-.mobile-nav-close{
-  display:none;
-  position:absolute;
-  top:14px;
-  right:14px;
-  width:42px;
-  height:42px;
-  border:1px solid rgba(255,255,255,.28);
-  border-radius:12px;
-  background:rgba(255,255,255,.14);
-  color:#fff;
-  font-size:25px;
-  font-weight:900;
-  line-height:1;
-  align-items:center;
-  justify-content:center;
-  z-index:2;
-}
-body.mobile-nav-open{overflow:hidden;touch-action:none}
-@media(max-width:800px){
-  .sidebar{
-    left:0 !important;
-    width:min(84vw,330px) !important;
-    max-width:330px;
-    height:100dvh;
-    transform:translateX(-105%);
-    transition:transform .24s ease;
-    z-index:100;
-    box-shadow:18px 0 45px rgba(3,12,25,.32);
-    overflow-y:auto;
-    overscroll-behavior:contain;
-    -webkit-overflow-scrolling:touch;
-    padding-top:22px;
+
+@media (max-width:800px){
+  body{
+    overflow-x:hidden;
   }
-  .sidebar.open{transform:translateX(0);left:0 !important}
-  .mobile-nav-close{display:flex}
-  .sidebar .brand{padding-right:50px}
-  .sidebar nav{overflow:visible;padding-bottom:28px}
+
+  body.menu-open{
+    overflow:hidden;
+  }
+
+  .app-shell{
+    display:block !important;
+    min-height:100vh;
+  }
+
+  .main{
+    display:block !important;
+    width:100%;
+    min-width:0;
+  }
+
+  .sidebar{
+    display:flex !important;
+    position:fixed !important;
+    top:0 !important;
+    bottom:0 !important;
+    left:0 !important;
+    width:min(82vw,300px) !important;
+    max-width:300px !important;
+    height:100dvh !important;
+    z-index:1001 !important;
+    transform:translate3d(-105%,0,0) !important;
+    transition:transform .22s ease !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch;
+    box-shadow:18px 0 45px rgba(3,12,25,.35);
+    padding-top:18px !important;
+  }
+
+  .sidebar.mobile-open{
+    transform:translate3d(0,0,0) !important;
+  }
+
+  .mobile-menu-backdrop{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    background:rgba(4,12,25,.62);
+  }
+
+  .mobile-menu-backdrop.visible{
+    display:block;
+  }
+
+  .mobile-menu-close{
+    display:grid;
+    place-items:center;
+    position:absolute;
+    top:12px;
+    right:12px;
+    width:44px;
+    height:44px;
+    padding:0;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:13px;
+    background:#ffffff;
+    color:#183257;
+    font-size:21px;
+    font-weight:900;
+    z-index:3;
+  }
+
+  .sidebar .brand{
+    padding-right:54px !important;
+  }
+
+  .sidebar nav{
+    overflow:visible !important;
+    padding-bottom:28px !important;
+  }
+
   .menu-btn{
     display:grid !important;
     place-items:center;
-    min-width:44px;
-    min-height:44px;
+    flex:0 0 44px;
+    width:44px;
+    height:44px;
+    padding:0;
     border-radius:12px;
     background:var(--surface2);
-    position:relative;
-    z-index:1;
+    color:var(--text);
   }
-  .topbar{gap:12px}
-  .topbar>div:nth-child(2){min-width:0;flex:1}
-  .topbar h2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .top-actions{flex-shrink:0}
-  .top-actions .primary{font-size:0;padding:11px 13px}
-  .top-actions .primary::after{content:'＋';font-size:23px;line-height:1}
+
+  .topbar{
+    display:flex !important;
+    gap:10px;
+    padding:14px 12px !important;
+  }
+
+  .topbar > div:nth-child(2){
+    min-width:0;
+    flex:1;
+  }
+
+  .topbar h2{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .top-actions{
+    flex:0 0 auto;
+  }
+
+  .top-actions .primary{
+    width:44px;
+    min-width:44px;
+    height:44px;
+    padding:0 !important;
+    font-size:0;
+  }
+
+  .top-actions .primary::after{
+    content:'+';
+    font-size:27px;
+    line-height:1;
+  }
+
+  .page-content{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+  }
 }
-@media(max-width:420px){
-  .sidebar{width:min(88vw,320px) !important}
-  .brand h1{font-size:17px}
-  .brand p{font-size:11px}
+
+@media (max-width:420px){
+  .sidebar{
+    width:min(86vw,290px) !important;
+  }
 }
