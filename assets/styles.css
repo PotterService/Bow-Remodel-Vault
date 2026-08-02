@@ -152,3 +152,75 @@ body.compact .entity-card{padding:12px}body.compact .card-grid{gap:10px}
   .two-col-list{columns:1}
   .version-pill{white-space:normal}
 }
+
+
+/* Mobile navigation drawer improvements - v1.6.3 */
+.mobile-nav-backdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(8,18,34,.62);
+  backdrop-filter:blur(2px);
+  z-index:98;
+}
+.mobile-nav-backdrop.show{display:block}
+.mobile-nav-close{
+  display:none;
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:42px;
+  height:42px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:12px;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  font-size:25px;
+  font-weight:900;
+  line-height:1;
+  align-items:center;
+  justify-content:center;
+  z-index:2;
+}
+body.mobile-nav-open{overflow:hidden;touch-action:none}
+@media(max-width:800px){
+  .sidebar{
+    left:0 !important;
+    width:min(84vw,330px) !important;
+    max-width:330px;
+    height:100dvh;
+    transform:translateX(-105%);
+    transition:transform .24s ease;
+    z-index:100;
+    box-shadow:18px 0 45px rgba(3,12,25,.32);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    padding-top:22px;
+  }
+  .sidebar.open{transform:translateX(0);left:0 !important}
+  .mobile-nav-close{display:flex}
+  .sidebar .brand{padding-right:50px}
+  .sidebar nav{overflow:visible;padding-bottom:28px}
+  .menu-btn{
+    display:grid !important;
+    place-items:center;
+    min-width:44px;
+    min-height:44px;
+    border-radius:12px;
+    background:var(--surface2);
+    position:relative;
+    z-index:1;
+  }
+  .topbar{gap:12px}
+  .topbar>div:nth-child(2){min-width:0;flex:1}
+  .topbar h2{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .top-actions{flex-shrink:0}
+  .top-actions .primary{font-size:0;padding:11px 13px}
+  .top-actions .primary::after{content:'＋';font-size:23px;line-height:1}
+}
+@media(max-width:420px){
+  .sidebar{width:min(88vw,320px) !important}
+  .brand h1{font-size:17px}
+  .brand p{font-size:11px}
+}
