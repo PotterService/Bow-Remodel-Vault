@@ -6,13 +6,159 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Measurements | Bow Remodel Vault</title>
 <link rel="stylesheet" href="assets/styles.css">
+
+<!-- Google Analytics 4 + Bow Remodel Vault tracking -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ELQSW0TEBE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-ELQSW0TEBE', {
+    send_page_view: true,
+    page_title: document.title,
+    page_location: window.location.href,
+    page_path: window.location.pathname,
+    site_name: 'Bow Remodel Vault'
+  });
+
+  (function () {
+    function cleanText(value) {
+      return (value || '').replace(/\s+/g, ' ').trim().slice(0, 120);
+    }
+
+    function pageName() {
+      return document.body && document.body.dataset.page
+        ? document.body.dataset.page
+        : window.location.pathname.split('/').pop().replace('.html', '') || 'dashboard';
+    }
+
+    function appVersion() {
+      return document.body && document.body.dataset.version
+        ? document.body.dataset.version
+        : 'unknown';
+    }
+
+    function elementName(el) {
+      return cleanText(
+        el.getAttribute('data-track-name') ||
+        el.getAttribute('aria-label') ||
+        el.innerText ||
+        el.textContent ||
+        el.getAttribute('title') ||
+        el.id ||
+        el.className ||
+        el.tagName
+      );
+    }
+
+    function clickType(el, href, name) {
+      var lowerName = (name || '').toLowerCase();
+      if (href.startsWith('tel:')) return 'phone_click';
+      if (href.startsWith('mailto:')) return 'email_click';
+      if (href.startsWith('sms:')) return 'text_click';
+      if (el.hasAttribute('download') || /\.(pdf|zip|docx?|xlsx?|pptx?|csv|json|jpg|jpeg|png|webp)$/i.test(href)) return 'download_click';
+      if (lowerName.includes('print')) return 'print_click';
+      if (lowerName.includes('pdf')) return 'pdf_click';
+      if (lowerName.includes('export')) return 'export_click';
+      if (lowerName.includes('import')) return 'import_click';
+      if (lowerName.includes('quick add')) return 'quick_add_click';
+      if (lowerName.includes('add new')) return 'add_new_click';
+      if (el.tagName === 'BUTTON' || el.getAttribute('role') === 'button' || el.classList.contains('btn')) return 'button_click';
+      return 'link_click';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      gtag('event', 'project_loaded', {
+        project_name: 'Bow Remodel Vault',
+        site_name: 'Bow Remodel Vault',
+        page_name_custom: pageName(),
+        app_version: appVersion(),
+        site_host: window.location.hostname,
+        page_path: window.location.pathname,
+        page_title: document.title
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      var el = event.target.closest('a, button, [role="button"], input[type="button"], input[type="submit"]');
+      if (!el || typeof gtag !== 'function') return;
+
+      var href = el.getAttribute('href') || '';
+      var absoluteUrl = '';
+      try { absoluteUrl = href ? new URL(href, window.location.href).href : ''; } catch (e) {}
+
+      var destinationHost = '';
+      try { destinationHost = absoluteUrl ? new URL(absoluteUrl).hostname : ''; } catch (e) {}
+
+      var name = elementName(el);
+      var eventName = clickType(el, href, name);
+      var isExternal = destinationHost && destinationHost !== window.location.hostname;
+
+      gtag('event', eventName, {
+        project_name: 'Bow Remodel Vault',
+        site_name: 'Bow Remodel Vault',
+        app_version: appVersion(),
+        page_name_custom: pageName(),
+        page_title: document.title,
+        page_path: window.location.pathname,
+        page_url: window.location.href,
+        element_text: name,
+        element_id: el.id || '',
+        element_classes: cleanText(typeof el.className === 'string' ? el.className : ''),
+        element_tag: el.tagName.toLowerCase(),
+        destination_url: absoluteUrl,
+        destination_host: destinationHost,
+        outbound: !!isExternal,
+        referrer_url: document.referrer || '',
+        traffic_source: new URLSearchParams(window.location.search).get('utm_source') || '',
+        traffic_medium: new URLSearchParams(window.location.search).get('utm_medium') || '',
+        traffic_campaign: new URLSearchParams(window.location.search).get('utm_campaign') || ''
+      });
+    }, true);
+
+    document.addEventListener('submit', function (event) {
+      var form = event.target;
+      if (!form || form.tagName !== 'FORM' || typeof gtag !== 'function') return;
+
+      gtag('event', 'form_save', {
+        project_name: 'Bow Remodel Vault',
+        site_name: 'Bow Remodel Vault',
+        app_version: appVersion(),
+        page_name_custom: pageName(),
+        form_id: form.id || '',
+        form_type: form.getAttribute('data-form') || form.getAttribute('name') || 'unknown',
+        page_path: window.location.pathname,
+        page_title: document.title
+      });
+    }, true);
+
+    document.addEventListener('change', function (event) {
+      var el = event.target;
+      if (!el || typeof gtag !== 'function') return;
+
+      if (el.matches('input[type="file"]')) {
+        gtag('event', 'file_selected', {
+          project_name: 'Bow Remodel Vault',
+          site_name: 'Bow Remodel Vault',
+          app_version: appVersion(),
+          page_name_custom: pageName(),
+          field_name: el.name || el.id || 'file',
+          page_path: window.location.pathname
+        });
+      }
+    }, true);
+  })();
+</script>
+
 </head>
-<body data-version="1.6.1" data-page="measurements">
+<body data-version="1.6" data-page="measurements">
 <div class="app-shell">
 <aside class="sidebar">
   <div class="brand">
     <div class="brand-mark">BR</div>
-    <div class="brand-copy"><h1>Bow Remodel Vault</h1><p>Plan. Build. Track. Finish.</p><small class="app-version">Version 1.6.2.1</small></div>
+    <div class="brand-copy"><h1>Bow Remodel Vault</h1><p>Plan. Build. Track. Finish.</p><small class="app-version">Version 1.6</small></div>
     
   </div>
   <nav><a class="" href="index.html"><span>🏠</span>Dashboard</a>
