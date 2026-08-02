@@ -1,0 +1,101 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Settings | Bow Remodel Vault</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="settings">
+<div class="app-shell">
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark">BR</div>
+    <div><h1>Bow Remodel Vault</h1><p>Plan. Build. Track. Finish.</p></div>
+  </div>
+  <nav><a class="" href="index.html"><span>🏠</span>Dashboard</a>
+<a class="" href="rooms.html"><span>🚪</span>Rooms</a>
+<a class="" href="tasks.html"><span>✅</span>Tasks</a>
+<a class="" href="budget.html"><span>💰</span>Budget</a>
+<a class="" href="shopping.html"><span>🛒</span>Shopping</a>
+<a class="" href="photos.html"><span>📸</span>Photos</a>
+<a class="" href="measurements.html"><span>📐</span>Measurements</a>
+<a class="" href="materials.html"><span>📦</span>Materials</a>
+<a class="" href="tools.html"><span>🧰</span>Tools</a>
+<a class="" href="contractors.html"><span>👷</span>Contractors</a>
+<a class="" href="documents.html"><span>📄</span>Documents</a>
+<a class="" href="timeline.html"><span>🗓️</span>Timeline</a>
+<a class="" href="reports.html"><span>📊</span>Reports</a>
+<a class="active" href="settings.html"><span>⚙️</span>Settings</a></nav>
+  <div class="sidebar-footer">
+    <button class="ghost full" data-action="quick-export">Export Backup</button>
+    <small>Local-first. No account required.</small>
+  </div>
+</aside>
+<main class="main">
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <div>
+    <p class="eyebrow">Bow Remodel Vault</p>
+    <h2>Settings</h2>
+  </div>
+  <div class="top-actions">
+    <button class="ghost" data-action="theme-toggle">◐ Theme</button>
+    <button class="primary" data-action="open-quick-add">＋ Quick Add</button>
+  </div>
+</header>
+<section class="page-content" id="pageContent">
+
+<div class="settings-grid">
+<section class="panel">
+  <div class="panel-head"><div><p class="eyebrow">Project</p><h3>Property & Project Details</h3></div></div>
+  <form class="form-grid" id="settingsForm">
+    <label>Project Name<input name="projectName" placeholder="Mom's Home Remodel"></label>
+    <label>Property Name<input name="propertyName" placeholder="Main House"></label>
+    <label>Project Start<input name="startDate" type="date"></label>
+    <label>Target Finish<input name="targetDate" type="date"></label>
+    <label>Address<input name="address" placeholder="Optional"></label>
+    <label>Square Feet<input name="squareFeet" type="number"></label>
+    <label class="span-2">Project Notes<textarea name="notes"></textarea></label>
+    <div class="form-actions"><button class="primary" type="submit">Save Settings</button></div>
+  </form>
+</section>
+<section class="panel">
+  <div class="panel-head"><div><p class="eyebrow">Backup</p><h3>Export & Import</h3></div></div>
+  <p>Your remodel data is stored in this browser. Export regular backups, especially before clearing browser data or changing devices.</p>
+  <div class="backup-actions">
+    <button class="primary" data-action="quick-export">Export JSON Backup</button>
+    <label class="button-file">Import Backup<input id="importFile" type="file" accept=".json"></label>
+    <button class="danger" id="resetAllData">Reset All Data</button>
+  </div>
+</section>
+<section class="panel">
+  <div class="panel-head"><div><p class="eyebrow">Appearance</p><h3>Display Options</h3></div></div>
+  <div class="setting-row"><span>Theme</span><button class="ghost" data-action="theme-toggle">Toggle Light / Dark</button></div>
+  <div class="setting-row"><span>Compact cards</span><input id="compactToggle" type="checkbox"></div>
+</section>
+<section class="panel warning-panel">
+  <h3>Local Storage Notice</h3>
+  <p>Photos and uploaded documents are saved inside your browser when possible. Large files can fill browser storage quickly. Keep original copies elsewhere and export backups regularly.</p>
+</section>
+</div>
+
+</section>
+</main>
+</div>
+<div class="modal-backdrop hidden" id="modalBackdrop"></div>
+<div class="modal hidden" id="quickModal">
+  <div class="modal-head"><h3>Quick Add</h3><button data-action="close-modal">✕</button></div>
+  <div class="quick-grid">
+    <button data-quick="room">🚪 Room</button>
+    <button data-quick="task">✅ Task</button>
+    <button data-quick="expense">💰 Expense</button>
+    <button data-quick="shopping">🛒 Shopping Item</button>
+    <button data-quick="timeline">🗓️ Timeline Note</button>
+    <button data-quick="measurement">📐 Measurement</button>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

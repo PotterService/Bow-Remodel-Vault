@@ -1,0 +1,78 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reports | Bow Remodel Vault</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="reports">
+<div class="app-shell">
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark">BR</div>
+    <div><h1>Bow Remodel Vault</h1><p>Plan. Build. Track. Finish.</p></div>
+  </div>
+  <nav><a class="" href="index.html"><span>🏠</span>Dashboard</a>
+<a class="" href="rooms.html"><span>🚪</span>Rooms</a>
+<a class="" href="tasks.html"><span>✅</span>Tasks</a>
+<a class="" href="budget.html"><span>💰</span>Budget</a>
+<a class="" href="shopping.html"><span>🛒</span>Shopping</a>
+<a class="" href="photos.html"><span>📸</span>Photos</a>
+<a class="" href="measurements.html"><span>📐</span>Measurements</a>
+<a class="" href="materials.html"><span>📦</span>Materials</a>
+<a class="" href="tools.html"><span>🧰</span>Tools</a>
+<a class="" href="contractors.html"><span>👷</span>Contractors</a>
+<a class="" href="documents.html"><span>📄</span>Documents</a>
+<a class="" href="timeline.html"><span>🗓️</span>Timeline</a>
+<a class="active" href="reports.html"><span>📊</span>Reports</a>
+<a class="" href="settings.html"><span>⚙️</span>Settings</a></nav>
+  <div class="sidebar-footer">
+    <button class="ghost full" data-action="quick-export">Export Backup</button>
+    <small>Local-first. No account required.</small>
+  </div>
+</aside>
+<main class="main">
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <div>
+    <p class="eyebrow">Bow Remodel Vault</p>
+    <h2>Reports</h2>
+  </div>
+  <div class="top-actions">
+    <button class="ghost" data-action="theme-toggle">◐ Theme</button>
+    <button class="primary" data-action="open-quick-add">＋ Quick Add</button>
+  </div>
+</header>
+<section class="page-content" id="pageContent">
+
+<div class="page-intro"><div><h3>Reports & Insights</h3><p>See where the time and money are going across the entire remodel.</p></div><button class="primary" onclick="window.print()">Print Report</button></div>
+<div class="report-grid">
+  <article class="report-card"><span>Total Budget</span><strong id="reportBudget">$0.00</strong></article>
+  <article class="report-card"><span>Total Spent</span><strong id="reportSpent">$0.00</strong></article>
+  <article class="report-card"><span>Budget Remaining</span><strong id="reportRemaining">$0.00</strong></article>
+  <article class="report-card"><span>Total Hours Logged</span><strong id="reportHours">0</strong></article>
+</div>
+<section class="panel"><div class="panel-head"><h3>Spending by Category</h3></div><div id="categoryReport" class="bar-report empty-state">No expenses yet.</div></section>
+<section class="panel"><div class="panel-head"><h3>Progress by Room</h3></div><div id="roomReport" class="bar-report empty-state">No rooms yet.</div></section>
+<section class="panel"><div class="panel-head"><h3>Project Summary</h3></div><div id="summaryReport" class="summary-report"></div></section>
+
+</section>
+</main>
+</div>
+<div class="modal-backdrop hidden" id="modalBackdrop"></div>
+<div class="modal hidden" id="quickModal">
+  <div class="modal-head"><h3>Quick Add</h3><button data-action="close-modal">✕</button></div>
+  <div class="quick-grid">
+    <button data-quick="room">🚪 Room</button>
+    <button data-quick="task">✅ Task</button>
+    <button data-quick="expense">💰 Expense</button>
+    <button data-quick="shopping">🛒 Shopping Item</button>
+    <button data-quick="timeline">🗓️ Timeline Note</button>
+    <button data-quick="measurement">📐 Measurement</button>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

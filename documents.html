@@ -1,0 +1,88 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Documents | Bow Remodel Vault</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="documents">
+<div class="app-shell">
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark">BR</div>
+    <div><h1>Bow Remodel Vault</h1><p>Plan. Build. Track. Finish.</p></div>
+  </div>
+  <nav><a class="" href="index.html"><span>🏠</span>Dashboard</a>
+<a class="" href="rooms.html"><span>🚪</span>Rooms</a>
+<a class="" href="tasks.html"><span>✅</span>Tasks</a>
+<a class="" href="budget.html"><span>💰</span>Budget</a>
+<a class="" href="shopping.html"><span>🛒</span>Shopping</a>
+<a class="" href="photos.html"><span>📸</span>Photos</a>
+<a class="" href="measurements.html"><span>📐</span>Measurements</a>
+<a class="" href="materials.html"><span>📦</span>Materials</a>
+<a class="" href="tools.html"><span>🧰</span>Tools</a>
+<a class="" href="contractors.html"><span>👷</span>Contractors</a>
+<a class="active" href="documents.html"><span>📄</span>Documents</a>
+<a class="" href="timeline.html"><span>🗓️</span>Timeline</a>
+<a class="" href="reports.html"><span>📊</span>Reports</a>
+<a class="" href="settings.html"><span>⚙️</span>Settings</a></nav>
+  <div class="sidebar-footer">
+    <button class="ghost full" data-action="quick-export">Export Backup</button>
+    <small>Local-first. No account required.</small>
+  </div>
+</aside>
+<main class="main">
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <div>
+    <p class="eyebrow">Bow Remodel Vault</p>
+    <h2>Documents</h2>
+  </div>
+  <div class="top-actions">
+    <button class="ghost" data-action="theme-toggle">◐ Theme</button>
+    <button class="primary" data-action="open-quick-add">＋ Quick Add</button>
+  </div>
+</header>
+<section class="page-content" id="pageContent">
+
+<div class="page-intro"><div><h3>Documents</h3><p>Organize receipts, warranties, manuals, permits, inspections, contracts, and plans.</p></div><button class="primary" data-toggle-form="documentForm">＋ Add New</button></div>
+<section class="panel hidden" id="documentForm">
+  <div class="panel-head"><h3>Add Document</h3><button class="ghost" data-toggle-form="documentForm">Close</button></div>
+  <form class="form-grid" data-form="document">
+    <label>Document Name<input required name="name" placeholder="Kitchen appliance warranty"></label>
+<label>Room<input name="room" placeholder="Kitchen"></label>
+<label>Type<select name="type"><option>Receipt</option><option>Invoice</option><option>Warranty</option><option>Manual</option><option>Permit</option><option>Inspection</option><option>Contract</option><option>Blueprint</option><option>Insurance</option><option>Other</option></select></label>
+<label>Date<input name="date" type="date"></label>
+<label>Reference / Number<input name="reference"></label>
+<label>Expiration<input name="expiration" type="date"></label>
+<label class="span-2">File<input name="file" type="file"></label>
+<label class="span-2">Notes<textarea name="notes"></textarea></label>
+    <div class="form-actions"><button class="primary" type="submit">Save</button><button class="ghost" type="reset">Clear</button></div>
+  </form>
+</section>
+<div class="filter-bar">
+  <input type="search" placeholder="Search..." data-search="document">
+  <select data-filter-status="document"><option value="">All statuses</option><option>Not Started</option><option>Planning</option><option>In Progress</option><option>Waiting</option><option>Paused</option><option>Completed</option></select>
+</div>
+<div class="card-grid" id="documentList"></div>
+
+</section>
+</main>
+</div>
+<div class="modal-backdrop hidden" id="modalBackdrop"></div>
+<div class="modal hidden" id="quickModal">
+  <div class="modal-head"><h3>Quick Add</h3><button data-action="close-modal">✕</button></div>
+  <div class="quick-grid">
+    <button data-quick="room">🚪 Room</button>
+    <button data-quick="task">✅ Task</button>
+    <button data-quick="expense">💰 Expense</button>
+    <button data-quick="shopping">🛒 Shopping Item</button>
+    <button data-quick="timeline">🗓️ Timeline Note</button>
+    <button data-quick="measurement">📐 Measurement</button>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

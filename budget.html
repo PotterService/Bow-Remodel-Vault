@@ -1,0 +1,94 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Budget | Bow Remodel Vault</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="budget">
+<div class="app-shell">
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark">BR</div>
+    <div><h1>Bow Remodel Vault</h1><p>Plan. Build. Track. Finish.</p></div>
+  </div>
+  <nav><a class="" href="index.html"><span>🏠</span>Dashboard</a>
+<a class="" href="rooms.html"><span>🚪</span>Rooms</a>
+<a class="" href="tasks.html"><span>✅</span>Tasks</a>
+<a class="active" href="budget.html"><span>💰</span>Budget</a>
+<a class="" href="shopping.html"><span>🛒</span>Shopping</a>
+<a class="" href="photos.html"><span>📸</span>Photos</a>
+<a class="" href="measurements.html"><span>📐</span>Measurements</a>
+<a class="" href="materials.html"><span>📦</span>Materials</a>
+<a class="" href="tools.html"><span>🧰</span>Tools</a>
+<a class="" href="contractors.html"><span>👷</span>Contractors</a>
+<a class="" href="documents.html"><span>📄</span>Documents</a>
+<a class="" href="timeline.html"><span>🗓️</span>Timeline</a>
+<a class="" href="reports.html"><span>📊</span>Reports</a>
+<a class="" href="settings.html"><span>⚙️</span>Settings</a></nav>
+  <div class="sidebar-footer">
+    <button class="ghost full" data-action="quick-export">Export Backup</button>
+    <small>Local-first. No account required.</small>
+  </div>
+</aside>
+<main class="main">
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <div>
+    <p class="eyebrow">Bow Remodel Vault</p>
+    <h2>Budget</h2>
+  </div>
+  <div class="top-actions">
+    <button class="ghost" data-action="theme-toggle">◐ Theme</button>
+    <button class="primary" data-action="open-quick-add">＋ Quick Add</button>
+  </div>
+</header>
+<section class="page-content" id="pageContent">
+
+<div class="budget-hero">
+  <div><p class="eyebrow">Project Budget</p><h3 id="budgetTotal">$0.00</h3><span>Total planned budget</span></div>
+  <label>Set Total Budget<input id="globalBudgetInput" type="number" min="0" step="0.01"><button class="primary" id="saveGlobalBudget">Save</button></label>
+</div>
+
+<div class="page-intro"><div><h3>Expenses</h3><p>Track purchases, labor, taxes, refunds, shipping, and unexpected costs.</p></div><button class="primary" data-toggle-form="expenseForm">＋ Add New</button></div>
+<section class="panel hidden" id="expenseForm">
+  <div class="panel-head"><h3>Add Expense</h3><button class="ghost" data-toggle-form="expenseForm">Close</button></div>
+  <form class="form-grid" data-form="expense">
+    <label>Description<input required name="name" placeholder="Kitchen paint"></label>
+<label>Room<input name="room" placeholder="Kitchen"></label>
+<label>Category<select name="category"><option>Materials</option><option>Labor</option><option>Electrical</option><option>Plumbing</option><option>Paint</option><option>Flooring</option><option>Appliances</option><option>Permits</option><option>Tools</option><option>Miscellaneous</option></select></label>
+<label>Store / Vendor<input name="vendor" placeholder="Lowe's"></label>
+<label>Amount<input required name="amount" type="number" min="0" step="0.01"></label>
+<label>Tax<input name="tax" type="number" min="0" step="0.01"></label>
+<label>Date<input name="date" type="date"></label>
+<label>Payment Method<input name="payment" placeholder="Card, cash..."></label>
+<label class="span-2">Notes<textarea name="notes"></textarea></label>
+    <div class="form-actions"><button class="primary" type="submit">Save</button><button class="ghost" type="reset">Clear</button></div>
+  </form>
+</section>
+<div class="filter-bar">
+  <input type="search" placeholder="Search..." data-search="expense">
+  <select data-filter-status="expense"><option value="">All statuses</option><option>Not Started</option><option>Planning</option><option>In Progress</option><option>Waiting</option><option>Paused</option><option>Completed</option></select>
+</div>
+<div class="card-grid" id="expenseList"></div>
+
+</section>
+</main>
+</div>
+<div class="modal-backdrop hidden" id="modalBackdrop"></div>
+<div class="modal hidden" id="quickModal">
+  <div class="modal-head"><h3>Quick Add</h3><button data-action="close-modal">✕</button></div>
+  <div class="quick-grid">
+    <button data-quick="room">🚪 Room</button>
+    <button data-quick="task">✅ Task</button>
+    <button data-quick="expense">💰 Expense</button>
+    <button data-quick="shopping">🛒 Shopping Item</button>
+    <button data-quick="timeline">🗓️ Timeline Note</button>
+    <button data-quick="measurement">📐 Measurement</button>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

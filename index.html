@@ -1,0 +1,108 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard | Bow Remodel Vault</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-page="dashboard">
+<div class="app-shell">
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark">BR</div>
+    <div><h1>Bow Remodel Vault</h1><p>Plan. Build. Track. Finish.</p></div>
+  </div>
+  <nav><a class="active" href="index.html"><span>🏠</span>Dashboard</a>
+<a class="" href="rooms.html"><span>🚪</span>Rooms</a>
+<a class="" href="tasks.html"><span>✅</span>Tasks</a>
+<a class="" href="budget.html"><span>💰</span>Budget</a>
+<a class="" href="shopping.html"><span>🛒</span>Shopping</a>
+<a class="" href="photos.html"><span>📸</span>Photos</a>
+<a class="" href="measurements.html"><span>📐</span>Measurements</a>
+<a class="" href="materials.html"><span>📦</span>Materials</a>
+<a class="" href="tools.html"><span>🧰</span>Tools</a>
+<a class="" href="contractors.html"><span>👷</span>Contractors</a>
+<a class="" href="documents.html"><span>📄</span>Documents</a>
+<a class="" href="timeline.html"><span>🗓️</span>Timeline</a>
+<a class="" href="reports.html"><span>📊</span>Reports</a>
+<a class="" href="settings.html"><span>⚙️</span>Settings</a></nav>
+  <div class="sidebar-footer">
+    <button class="ghost full" data-action="quick-export">Export Backup</button>
+    <small>Local-first. No account required.</small>
+  </div>
+</aside>
+<main class="main">
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn">☰</button>
+  <div>
+    <p class="eyebrow">Bow Remodel Vault</p>
+    <h2>Dashboard</h2>
+  </div>
+  <div class="top-actions">
+    <button class="ghost" data-action="theme-toggle">◐ Theme</button>
+    <button class="primary" data-action="open-quick-add">＋ Quick Add</button>
+  </div>
+</header>
+<section class="page-content" id="pageContent">
+
+<div class="hero">
+  <div>
+    <span class="badge">Renovation Command Center</span>
+    <h3>Keep every room, receipt, task, and idea in one organized place.</h3>
+    <p>Track the remodel from the first “before” photo to the final walkthrough.</p>
+    <div class="hero-actions">
+      <a class="primary button-link" href="rooms.html">Open Rooms</a>
+      <a class="ghost button-link" href="tasks.html">View Tasks</a>
+    </div>
+  </div>
+  <div class="progress-orb">
+    <strong id="overallProgress">0%</strong><span>Overall Progress</span>
+  </div>
+</div>
+
+<div class="stat-grid">
+  <article class="stat-card"><span>Rooms</span><strong id="statRooms">0</strong><small id="statRoomsDone">0 completed</small></article>
+  <article class="stat-card"><span>Tasks</span><strong id="statTasks">0</strong><small id="statTasksDone">0 completed</small></article>
+  <article class="stat-card"><span>Total Spent</span><strong id="statSpent">$0.00</strong><small>Across all rooms</small></article>
+  <article class="stat-card"><span>Budget Left</span><strong id="statRemaining">$0.00</strong><small id="statBudgetLabel">No budget set</small></article>
+</div>
+
+<div class="dashboard-grid">
+  <section class="panel span-2">
+    <div class="panel-head"><div><p class="eyebrow">Progress</p><h3>Room Progress</h3></div><a href="rooms.html">Manage rooms →</a></div>
+    <div id="dashboardRooms" class="room-progress-list empty-state">Add a room to begin tracking progress.</div>
+  </section>
+  <section class="panel">
+    <div class="panel-head"><div><p class="eyebrow">Next Up</p><h3>Priority Tasks</h3></div><a href="tasks.html">All tasks →</a></div>
+    <div id="priorityTasks" class="stack empty-state">No active tasks yet.</div>
+  </section>
+  <section class="panel">
+    <div class="panel-head"><div><p class="eyebrow">Money</p><h3>Recent Expenses</h3></div><a href="budget.html">Open budget →</a></div>
+    <div id="recentExpenses" class="stack empty-state">No expenses recorded.</div>
+  </section>
+  <section class="panel span-2">
+    <div class="panel-head"><div><p class="eyebrow">Activity</p><h3>Recent Timeline</h3></div><a href="timeline.html">Full timeline →</a></div>
+    <div id="recentTimeline" class="timeline-list empty-state">No timeline entries yet.</div>
+  </section>
+</div>
+
+</section>
+</main>
+</div>
+<div class="modal-backdrop hidden" id="modalBackdrop"></div>
+<div class="modal hidden" id="quickModal">
+  <div class="modal-head"><h3>Quick Add</h3><button data-action="close-modal">✕</button></div>
+  <div class="quick-grid">
+    <button data-quick="room">🚪 Room</button>
+    <button data-quick="task">✅ Task</button>
+    <button data-quick="expense">💰 Expense</button>
+    <button data-quick="shopping">🛒 Shopping Item</button>
+    <button data-quick="timeline">🗓️ Timeline Note</button>
+    <button data-quick="measurement">📐 Measurement</button>
+  </div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>
